@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mortgage Loan Calculator</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+            <a class="navbar-brand" href="@Url.Action("Index", "Loan")">Mortgage Loan Calculator</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a href="@Url.Action("Logout", "Account")" class="btn btn-danger ml-auto">Logout</a>
+            }
+            else
+            {
+                <a href="@Url.Action("Login", "Account")" class="btn btn-primary ml-auto">Login</a>
+                <a href="@Url.Action("Register", "Account")" class="btn btn-secondary ml-2">Register</a>
+            }
+        </nav>
+
+        @RenderBody()
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

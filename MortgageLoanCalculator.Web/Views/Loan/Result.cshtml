@@ -1,0 +1,53 @@
+﻿@using System.Web.Mvc
+
+@{
+    ViewBag.Title = "Calculation Result";
+}
+<div class="container mt-4">
+    <h2>Loan Calculation Result</h2>
+    <p><strong>Monthly Payment:</strong> $@ViewBag.MonthlyPayment.ToString("F2")</p>
+    <h3>Amortization Schedule</h3>
+    @if (ViewBag.Schedule != null)
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Payment #</th>
+                    <th>Payment Amount</th>
+                    <th>Principal</th>
+                    <th>Interest</th>
+                    <th>Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var entry in ViewBag.Schedule)
+                {
+                    <tr>
+                        <td>@entry.PaymentNumber</td>
+                        <td>@entry.PaymentAmount.ToString("C")</td>
+                        <td>@entry.Principal.ToString("C")</td>
+                        <td>@entry.Interest.ToString("C")</td>
+                        <td>@entry.Balance.ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No amortization schedule available.</p>
+    }
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form method="post" action="@Url.Action("SaveCalculation")">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="loanAmount" value="@ViewBag.LoanAmount" />
+            <input type="hidden" name="interestRate" value="@ViewBag.InterestRate" />
+            <input type="hidden" name="loanTermYears" value="@ViewBag.LoanTermYears" />
+            <input type="hidden" name="monthlyPayment" value="@ViewBag.MonthlyPayment" />
+            <button type="submit" class="btn btn-success">Save Calculation</button>
+        </form>
+    }
+    <a href="@Url.Action("Index")" class="btn btn-secondary mt-2">Back</a>
+</div>
