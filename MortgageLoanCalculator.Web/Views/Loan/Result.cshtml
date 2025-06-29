@@ -1,4 +1,5 @@
 ﻿@using System.Web.Mvc
+@using MortgageLoanCalculator.Core.Models
 
 @{
     ViewBag.Title = "Calculation Result";
@@ -37,6 +38,30 @@
     {
         <p>No amortization schedule available.</p>
     }
+
+    <!-- New Section for Totals -->
+    @if (ViewBag.Schedule != null)
+    {
+        var schedule = ViewBag.Schedule as List<AmortizationEntry>;
+        if (schedule != null)
+        {
+            var totalPrincipal = schedule.Sum(entry => entry.Principal);
+            var totalInterest = schedule.Sum(entry => entry.Interest);
+            var totalPayments = ViewBag.MonthlyPayment * (ViewBag.LoanTermYears * 12);
+            var finalBalance = schedule.Any() ? schedule.Last().Balance : 0m;
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h4 class="card-title">Payment Summary</h4>
+                    <p><strong>Total Principal Paid:</strong> $@totalPrincipal.ToString("F2")</p>
+                    <p><strong>Total Interest Paid:</strong> $@totalInterest.ToString("F2")</p>
+                    <p><strong>Total Payment:</strong> $@totalPayments.ToString("F2")</p>
+                    <p><strong>Final Balance:</strong> $@finalBalance.ToString("F2")</p>
+                </div>
+            </div>
+        }
+    }
+
 
     @if (User.Identity.IsAuthenticated)
     {

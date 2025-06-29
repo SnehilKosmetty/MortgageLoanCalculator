@@ -1,4 +1,5 @@
-﻿using MortgageLoanCalculator.Core.Services;
+﻿using MortgageLoanCalculator.Core.Models;
+using MortgageLoanCalculator.Core.Services;
 using MortgageLoanCalculator.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,13 @@ namespace MortgageLoanCalculator.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SaveCalculation(decimal loanAmount, decimal interestRate, int loanTermYears, decimal monthlyPayment)
         {
+
+            var schedule = _loanService.GetAmortizationSchedule(loanAmount, interestRate, loanTermYears) as List<AmortizationEntry>;
+            var totalPrincipal = schedule.Sum(entry => entry.Principal);
+            var totalInterest = schedule.Sum(entry => entry.Interest);
+            var totalPayments = monthlyPayment * (loanTermYears * 12);
+            var finalBalance = schedule.Any() ? schedule.Last().Balance : 0m;
+
             var calculation = new MortgageLoanCalculator.Data.Models.LoanCalculation
             {
                 LoanAmount = loanAmount,
@@ -60,7 +68,11 @@ namespace MortgageLoanCalculator.Web.Controllers
                 LoanTermYears = loanTermYears,
                 MonthlyPayment = monthlyPayment,
                 CreatedAt = DateTime.UtcNow,
-                UserId = User.Identity.Name
+                UserId = User.Identity.Name,
+                TotalPrincipalPaid = totalPrincipal,
+                TotalInterestPaid = totalInterest,
+                TotalPayment = totalPayments,
+                FinalBalance = finalBalance
             };
             _context.LoanCalculations.Add(calculation);
             _context.SaveChanges();

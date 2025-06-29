@@ -7,13 +7,13 @@ namespace MortgageLoanCalculator.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.5.1")]
-    public sealed partial class InitialCreate : IMigrationMetadata
+    public sealed partial class AddTotalsToLoanCalculation : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddTotalsToLoanCalculation));
         
         string IMigrationMetadata.Id
         {
-            get { return "202506280028318_InitialCreate"; }
+            get { return "202506290523383_AddTotalsToLoanCalculation"; }
         }
         
         string IMigrationMetadata.Source

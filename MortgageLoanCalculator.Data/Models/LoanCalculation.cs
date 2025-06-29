@@ -15,5 +15,12 @@ namespace MortgageLoanCalculator.Data.Models
         public decimal MonthlyPayment { get; set; }
         public DateTime CreatedAt { get; set; }
         public string UserId { get; set; }
+
+
+        // New fields for totals
+        public decimal TotalPrincipalPaid { get; set; }
+        public decimal TotalInterestPaid { get; set; }
+        public decimal TotalPayment { get; set; }
+        public decimal FinalBalance { get; set; }
     }
 }

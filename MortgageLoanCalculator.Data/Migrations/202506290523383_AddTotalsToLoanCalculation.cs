@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class AddTotalsToLoanCalculation : DbMigration
     {
         public override void Up()
         {
@@ -18,6 +18,10 @@
                         MonthlyPayment = c.Decimal(nullable: false, precision: 18, scale: 2),
                         CreatedAt = c.DateTime(nullable: false),
                         UserId = c.String(),
+                        TotalPrincipalPaid = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        TotalInterestPaid = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        TotalPayment = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        FinalBalance = c.Decimal(nullable: false, precision: 18, scale: 2),
                     })
                 .PrimaryKey(t => t.Id);
             
