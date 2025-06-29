@@ -9,7 +9,10 @@ namespace MortgageLoanCalculator.Data.Models
 {
     public class DataContext : DbContext
     {
-        public DataContext() : base("name=DefaultConnection") { }
+        public DataContext() : base("name=DefaultConnection")
+        {
+
+        }
         public DbSet<LoanCalculation> LoanCalculations { get; set; }
     }
 }
